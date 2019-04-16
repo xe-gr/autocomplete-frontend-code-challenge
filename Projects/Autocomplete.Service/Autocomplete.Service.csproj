@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Projects\_WORK_\xe.autocomplete\Projects\Autocomplete.Service\Autocomplete.Service.xml</DocumentationFile>
+    <DocumentationFile>Autocomplete.Service.xml</DocumentationFile>
     <NoWarn>1701;1702,1591</NoWarn>
   </PropertyGroup>
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using Autocomplete.DataAccess.Repositories;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
@@ -11,7 +10,6 @@ namespace Autocomplete.DataAccess
 	public sealed class SessionManager
 	{
 		private const string SessionKey = "Autocomplete.API.DataAccess.UoW.Session";
-		private const string TransactionKey = "Autocomplete.API.DataAccess.UoW.Transaction";
 		private static readonly Lazy<SessionManager> LazyInstance = new Lazy<SessionManager>(() => new SessionManager());
 
 		private readonly ISessionFactory _sessionFactory;
@@ -29,17 +27,6 @@ namespace Autocomplete.DataAccess
 			_sessionFactory = BuildSessionFactory();
 		}
 
-		public void CloseSession()
-		{
-			var session = ThreadSession;
-			ThreadSession = null;
-
-			if (session != null && session.IsOpen)
-			{
-				session.Close();
-			}
-		}
-
 		public ISession GetSession()
 		{
 			var session = ThreadSession;
@@ -51,21 +38,6 @@ namespace Autocomplete.DataAccess
 			}
 
 			return ThreadSession;
-		}
-
-		public ISession GetSession(bool tracked)
-		{
-			if (tracked)
-			{
-				return GetSession();
-			}
-
-			return _sessionFactory.OpenSession();
-		}
-
-		public void SetSession(ISession session, Repository repo)
-		{
-			repo.Session = session;
 		}
 
 		private static ISessionFactory BuildSessionFactory()
